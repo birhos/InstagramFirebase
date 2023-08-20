@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D4E478C2A91E68B005D9736 /* FeedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4E478B2A91E68B005D9736 /* FeedCollectionViewCell.swift */; };
+		6D4E478E2A91E929005D9736 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4E478D2A91E929005D9736 /* Extensions.swift */; };
+		6D4E47912A91EA63005D9736 /* JGProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 6D4E47902A91EA63005D9736 /* JGProgressHUD */; };
 		6D4EF25F2A90811400A7ABD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4EF25E2A90811400A7ABD4 /* AppDelegate.swift */; };
 		6D4EF2612A90811400A7ABD4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4EF2602A90811400A7ABD4 /* SceneDelegate.swift */; };
 		6D4EF2632A90811400A7ABD4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4EF2622A90811400A7ABD4 /* ViewController.swift */; };
@@ -41,6 +44,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6D4E478B2A91E68B005D9736 /* FeedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FeedCollectionViewCell.swift; path = InstagramFirebase/Controller/FeedCollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
+		6D4E478D2A91E929005D9736 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = InstagramFirebase/Controller/Extensions.swift; sourceTree = SOURCE_ROOT; };
 		6D4EF25B2A90811400A7ABD4 /* InstagramFirebase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InstagramFirebase.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D4EF25E2A90811400A7ABD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6D4EF2602A90811400A7ABD4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -66,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D4E47912A91EA63005D9736 /* JGProgressHUD in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,6 +151,7 @@
 		6D4EF28E2A90816E00A7ABD4 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				6D4E478D2A91E929005D9736 /* Extensions.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -179,6 +186,7 @@
 		6D4EF2922A90817D00A7ABD4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				6D4E478B2A91E68B005D9736 /* FeedCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -206,6 +214,9 @@
 			dependencies = (
 			);
 			name = InstagramFirebase;
+			packageProductDependencies = (
+				6D4E47902A91EA63005D9736 /* JGProgressHUD */,
+			);
 			productName = InstagramFirebase;
 			productReference = 6D4EF25B2A90811400A7ABD4 /* InstagramFirebase.app */;
 			productType = "com.apple.product-type.application";
@@ -278,6 +289,9 @@
 				Base,
 			);
 			mainGroup = 6D4EF2522A90811400A7ABD4;
+			packageReferences = (
+				6D4E478F2A91EA63005D9736 /* XCRemoteSwiftPackageReference "JGProgressHUD" */,
+			);
 			productRefGroup = 6D4EF25C2A90811400A7ABD4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -321,6 +335,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6D4EF2632A90811400A7ABD4 /* ViewController.swift in Sources */,
+				6D4E478C2A91E68B005D9736 /* FeedCollectionViewCell.swift in Sources */,
 				6DED2BF42A9084CA00A7114B /* ImageSelectorController.swift in Sources */,
 				6DED2BF62A9084D700A7114B /* NotificationController.swift in Sources */,
 				6DED2BF22A9084BE00A7114B /* SearchController.swift in Sources */,
@@ -328,6 +343,7 @@
 				6DED2BF82A9084DD00A7114B /* ProfileController.swift in Sources */,
 				6DED2BF02A9084AB00A7114B /* FeedController.swift in Sources */,
 				6D4EF2952A90820A00A7ABD4 /* MainTabController.swift in Sources */,
+				6D4E478E2A91E929005D9736 /* Extensions.swift in Sources */,
 				6D4EF2612A90811400A7ABD4 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -660,6 +676,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6D4E478F2A91EA63005D9736 /* XCRemoteSwiftPackageReference "JGProgressHUD" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/JonasGessner/JGProgressHUD.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6D4E47902A91EA63005D9736 /* JGProgressHUD */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6D4E478F2A91EA63005D9736 /* XCRemoteSwiftPackageReference "JGProgressHUD" */;
+			productName = JGProgressHUD;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6D4EF2532A90811400A7ABD4 /* Project object */;
 }

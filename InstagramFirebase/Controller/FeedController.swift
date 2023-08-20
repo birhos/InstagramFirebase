@@ -8,8 +8,6 @@
 import UIKit
 
 final class FeedController: UICollectionViewController {
-    static let cellIdentifier = "FeedControllerCell"
-    
     // MARK: Lifecycle
     
     override func viewDidLoad() {
@@ -22,7 +20,7 @@ final class FeedController: UICollectionViewController {
     
     private func configureUI() {
         view.backgroundColor = .white
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: FeedController.cellIdentifier)
+        collectionView.register(FeedCollectionViewCell.self, forCellWithReuseIdentifier: FeedCollectionViewCell.cellIdentifier)
     }
 }
 
@@ -38,8 +36,7 @@ extension FeedController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FeedController.cellIdentifier, for: indexPath)
-        cell.backgroundColor = .red
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FeedCollectionViewCell.cellIdentifier, for: indexPath) as? FeedCollectionViewCell ?? FeedCollectionViewCell()
         return cell
     }
 }
