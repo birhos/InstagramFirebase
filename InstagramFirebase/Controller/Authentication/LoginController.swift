@@ -9,26 +9,26 @@ import UIKit
 
 final class LoginController: UIViewController {
     // MARK: Properties
-    
+
     private lazy var iconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "Instagram_logo_white")
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
-    
+
     private lazy var emailTextField: UITextField = {
         let textField = CustomTextField(placeHolder: "Email")
         textField.keyboardType = .emailAddress
         return textField
     }()
-    
+
     private lazy var passwordTextField: UITextField = {
         let textField = CustomTextField(placeHolder: "Password")
         textField.isSecureTextEntry = true
         return textField
     }()
-    
+
     private lazy var loginButton: UIButton = {
         let button = UIButton()
         button.setTitle("Login", for: .normal)
@@ -39,52 +39,55 @@ final class LoginController: UIViewController {
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
         return button
     }()
-    
+
     private lazy var forgotPasswordButton: UIButton = {
         let button = UIButton(type: .system)
         button.attributedTitle(firstPart: "Forgot your password?", secondPart: "Get help signing in.")
         return button
     }()
-    
+
     private lazy var dontHaveAccountButton: UIButton = {
         let button = UIButton(type: .system)
         button.attributedTitle(firstPart: "Don't have an account?", secondPart: "Sign Up")
+        button.addTarget(self, action: #selector(handleShowSignUp), for: .touchUpInside)
         return button
     }()
-    
-    // MARK: LifeCycle
-    
+
+    // MARK: Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         configureUI()
     }
-    
+
+    // MARK: Actions
+
+    @objc private func handleShowSignUp() {
+        let controller = RegistrationController()
+        navigationController?.pushViewController(controller, animated: true)
+    }
+
     // MARK: Helpers
-    
+
     private func configureUI() {
         view.backgroundColor = .systemBlue
         navigationController?.navigationBar.isHidden = true
         navigationController?.navigationBar.barStyle = .black
-        
-        let gradient = CAGradientLayer()
-        gradient.colors = [UIColor.systemPurple.cgColor, UIColor.systemBlue.cgColor]
-        gradient.locations = [0, 1]
-        view.layer.addSublayer(gradient)
-        gradient.frame = view.frame
-        
+
+        configureGradientLayer()
+
         view.addSubview(iconImageView)
         iconImageView.centerX(inView: view)
         iconImageView.setDimensions(height: 80, width: 120)
         iconImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 32)
-        
+
         let stack = UIStackView(arrangedSubviews: [emailTextField, passwordTextField, loginButton, forgotPasswordButton])
         stack.axis = .vertical
         stack.spacing = 20
-        
+
         view.addSubview(stack)
         stack.anchor(top: iconImageView.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 32, paddingLeft: 32, paddingRight: 32)
-        
+
         view.addSubview(dontHaveAccountButton)
         dontHaveAccountButton.centerX(inView: view)
         dontHaveAccountButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor)
