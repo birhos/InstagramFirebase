@@ -6,10 +6,13 @@
 //
 
 import UIKit
+import SnapKit
 
 final class LoginController: UIViewController {
     // MARK: Properties
-
+    
+    private var viewModel = LoginViewModel()
+    
     private lazy var iconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "Instagram_logo_white")
@@ -32,11 +35,12 @@ final class LoginController: UIViewController {
     private lazy var loginButton: UIButton = {
         let button = UIButton()
         button.setTitle("Login", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+        button.setTitleColor(viewModel.buttonTitleColor, for: .normal)
+        button.backgroundColor = viewModel.buttonBackgroundColor
         button.setHeight(50)
         button.layer.cornerRadius = 5
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
+        button.isEnabled = false
         return button
     }()
 
@@ -58,6 +62,7 @@ final class LoginController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        configureNotificationObservers()
     }
 
     // MARK: Actions
@@ -77,19 +82,44 @@ final class LoginController: UIViewController {
         configureGradientLayer()
 
         view.addSubview(iconImageView)
-        iconImageView.centerX(inView: view)
-        iconImageView.setDimensions(height: 80, width: 120)
-        iconImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 32)
-
+        iconImageView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.height.equalTo(80)
+            make.width.equalTo(120)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(32)
+        }
+        
         let stack = UIStackView(arrangedSubviews: [emailTextField, passwordTextField, loginButton, forgotPasswordButton])
         stack.axis = .vertical
         stack.spacing = 20
-
         view.addSubview(stack)
-        stack.anchor(top: iconImageView.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 32, paddingLeft: 32, paddingRight: 32)
-
+        stack.snp.makeConstraints { make in
+            make.top.equalTo(iconImageView.snp.bottom).offset(32)
+            make.left.equalToSuperview().offset(32)
+            make.right.equalToSuperview().offset(-32)
+        }
+        
         view.addSubview(dontHaveAccountButton)
-        dontHaveAccountButton.centerX(inView: view)
-        dontHaveAccountButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor)
+        dontHaveAccountButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+        }
+    }
+    
+    private func configureNotificationObservers() {
+        emailTextField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
+        passwordTextField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
+    }
+
+    @objc private func textDidChange(sender: UITextField) {
+        if sender == emailTextField {
+            viewModel.email = sender.text
+        } else {
+            viewModel.password = sender.text
+        }
+        
+        loginButton.isEnabled = viewModel.formIsValid
+        loginButton.backgroundColor = viewModel.buttonBackgroundColor
+        loginButton.setTitleColor(viewModel.buttonTitleColor, for: .normal)
     }
 }

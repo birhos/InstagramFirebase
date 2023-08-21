@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 final class RegistrationController: UIViewController {
     // MARK: Properties
@@ -76,19 +77,26 @@ final class RegistrationController: UIViewController {
         configureGradientLayer()
 
         view.addSubview(plusPhotoButton)
-        plusPhotoButton.centerX(inView: view)
-        plusPhotoButton.setDimensions(height: 140, width: 140)
-        plusPhotoButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 32)
-
+        plusPhotoButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.height.width.equalTo(140)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(32)
+        }
+        
         let stack = UIStackView(arrangedSubviews: [emailTextField, passwordTextField, fullNameTextField, usernameTextField, signUpButton])
         stack.axis = .vertical
         stack.spacing = 20
-
         view.addSubview(stack)
-        stack.anchor(top: plusPhotoButton.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 32, paddingLeft: 32, paddingRight: 32)
+        stack.snp.makeConstraints { make in
+            make.top.equalTo(plusPhotoButton.snp.bottom).offset(32)
+            make.left.equalToSuperview().offset(32)
+            make.right.equalToSuperview().offset(-32)
+        }
         
         view.addSubview(alreadyHaveAccountButton)
-        alreadyHaveAccountButton.centerX(inView: view)
-        alreadyHaveAccountButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor)
+        alreadyHaveAccountButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+        }
     }
 }
