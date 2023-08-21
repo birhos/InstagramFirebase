@@ -5,18 +5,19 @@
 //  Created by Haydar Demir on 21.08.2023.
 //
 
-import UIKit
 import SnapKit
+import UIKit
 
 final class RegistrationController: UIViewController {
     // MARK: Properties
-    
+
     private var viewModel = RegistrationViewModel()
 
     private lazy var plusPhotoButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "plus_photo"), for: .normal)
         button.tintColor = .white
+        button.addTarget(self, action: #selector(handleProfilePhotoSelect), for: .touchUpInside)
         return button
     }()
 
@@ -67,13 +68,13 @@ final class RegistrationController: UIViewController {
         configureUI()
         configureNotificationObservers()
     }
-    
+
     // MARK: Actions
-    
+
     @objc private func handleShowLogin() {
         navigationController?.popViewController(animated: true)
     }
-    
+
     @objc private func textDidChange(sender: UITextField) {
         if sender == emailTextField {
             viewModel.email = sender.text
@@ -84,8 +85,15 @@ final class RegistrationController: UIViewController {
         } else {
             viewModel.userName = sender.text
         }
-        
+
         updateForm()
+    }
+
+    @objc private func handleProfilePhotoSelect() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.allowsEditing = true
+        present(imagePickerController, animated: true)
     }
 
     // MARK: Helpers
@@ -99,7 +107,7 @@ final class RegistrationController: UIViewController {
             make.height.width.equalTo(140)
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(32)
         }
-        
+
         let stack = UIStackView(arrangedSubviews: [emailTextField, passwordTextField, fullNameTextField, usernameTextField, signUpButton])
         stack.axis = .vertical
         stack.spacing = 20
@@ -109,14 +117,14 @@ final class RegistrationController: UIViewController {
             make.left.equalToSuperview().offset(32)
             make.right.equalToSuperview().offset(-32)
         }
-        
+
         view.addSubview(alreadyHaveAccountButton)
         alreadyHaveAccountButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
     }
-    
+
     private func configureNotificationObservers() {
         emailTextField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
         passwordTextField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
@@ -132,5 +140,19 @@ extension RegistrationController: FormViewModel {
         signUpButton.isEnabled = viewModel.formIsValid
         signUpButton.backgroundColor = viewModel.buttonBackgroundColor
         signUpButton.setTitleColor(viewModel.buttonTitleColor, for: .normal)
+    }
+}
+
+// MARK: UIImagePickerControllerDelegate
+
+extension RegistrationController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        guard let profileImage = info[.editedImage] as? UIImage else { return }
+        plusPhotoButton.setImage(profileImage.withRenderingMode(.alwaysOriginal), for: .normal)
+        plusPhotoButton.layer.cornerRadius = 140 / 2
+        plusPhotoButton.layer.masksToBounds = true
+        plusPhotoButton.layer.borderColor = UIColor.white.cgColor
+        plusPhotoButton.layer.borderWidth = 2
+        self.dismiss(animated: true, completion: nil)
     }
 }
