@@ -5,14 +5,14 @@
 //  Created by Haydar Demir on 21.08.2023.
 //
 
-import UIKit
 import SnapKit
+import UIKit
 
 final class LoginController: UIViewController {
     // MARK: Properties
-    
+
     private var viewModel = LoginViewModel()
-    
+
     private lazy var iconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "Instagram_logo_white")
@@ -71,6 +71,16 @@ final class LoginController: UIViewController {
         let controller = RegistrationController()
         navigationController?.pushViewController(controller, animated: true)
     }
+    
+    @objc private func textDidChange(sender: UITextField) {
+        if sender == emailTextField {
+            viewModel.email = sender.text
+        } else {
+            viewModel.password = sender.text
+        }
+
+        updateForm()
+    }
 
     // MARK: Helpers
 
@@ -88,7 +98,7 @@ final class LoginController: UIViewController {
             make.width.equalTo(120)
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(32)
         }
-        
+
         let stack = UIStackView(arrangedSubviews: [emailTextField, passwordTextField, loginButton, forgotPasswordButton])
         stack.axis = .vertical
         stack.spacing = 20
@@ -98,26 +108,24 @@ final class LoginController: UIViewController {
             make.left.equalToSuperview().offset(32)
             make.right.equalToSuperview().offset(-32)
         }
-        
+
         view.addSubview(dontHaveAccountButton)
         dontHaveAccountButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
     }
-    
+
     private func configureNotificationObservers() {
         emailTextField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
         passwordTextField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
     }
+}
 
-    @objc private func textDidChange(sender: UITextField) {
-        if sender == emailTextField {
-            viewModel.email = sender.text
-        } else {
-            viewModel.password = sender.text
-        }
-        
+// MARK: FormViewModel
+
+extension LoginController: FormViewModel {
+    func updateForm() {
         loginButton.isEnabled = viewModel.formIsValid
         loginButton.backgroundColor = viewModel.buttonBackgroundColor
         loginButton.setTitleColor(viewModel.buttonTitleColor, for: .normal)
