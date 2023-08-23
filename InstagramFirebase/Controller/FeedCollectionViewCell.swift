@@ -125,7 +125,6 @@ class FeedCollectionViewCell: UICollectionViewCell {
         stackView = UIStackView(arrangedSubviews: [likeButton, commentButton, shareButton])
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
-        
         addSubview(stackView)
         stackView.snp.makeConstraints { make in
             make.top.equalTo(postImageView.snp.bottom)
